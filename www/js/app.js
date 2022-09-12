@@ -1,13 +1,24 @@
 let addressDisplay = document.getElementsByClassName('address')[0];
+let goToNavigationButton = document.getElementsByClassName('go-to-navigation')[0];
 let selectedFountain;
 let map = createMap();
 
 populateMapWithFountains(map);
 
-function markerOnClick(event){
+
+goToNavigationButton.addEventListener('click', (el, ev) => {
+    if (selectedFountain) {
+        window.location.href = 'https://www.google.com/maps/dir/?' + new URLSearchParams({
+            api: 1,
+            destination: selectedFountain.latlng[0] + ',' + selectedFountain.latlng[1]
+        });
+    }
+});
+
+function markerOnClick(event) {
     selectedFountain = this.data;
     addressDisplay.innerHTML = selectedFountain.address;
-    map.setView(selectedFountain.latlng, 17)
+    map.setView(selectedFountain.latlng, 17);
 }
 
 function populateMapWithFountains(map) {
