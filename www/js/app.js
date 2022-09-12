@@ -46,7 +46,7 @@ function createMap() {
     }).addTo(map);
 
     L.control.attribution({ position: 'topright' })
-        .addAttribution('© OpenStreetMap')
+        .addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors')
         .addTo(map);
 
     return map;
