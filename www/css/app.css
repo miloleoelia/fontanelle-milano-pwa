@@ -1,0 +1,77 @@
+@font-face {
+    font-family: "Roboto";
+    src: url("../fonts/Roboto-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("../fonts/Roboto-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+}
+
+
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Roboto', sans-serif;
+}
+
+#map {
+    height: 100vh;
+    width: 100vw;
+}
+
+.popup-container {
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+}
+
+.popup {
+    width: 98%;
+    margin-right: auto;
+    margin-left: auto;
+
+    min-height: 100px;
+    padding-top: 1rem;
+    background-color: #ffffff;
+
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.popup-row {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.address {
+    margin: 0;
+    font-weight: 300;
+}
+
+.go-to-navigation {
+    border: 0;
+    background-color: #19993d;
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px rgba(00, 00, 00, 20%);
+    
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
+
+    font-size: xx-large;
+    font-weight: 500;
+}
+
+.go-to-navigation:active {
+  background-color: #216133;
+  box-shadow: 2px 2px 2px rgba(00, 00, 00, 70%);
+  transform: translateY(4px);
+}

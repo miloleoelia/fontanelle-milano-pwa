@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Le fontanelle di Milano</title>
+    <meta name="description"
+        content="Applicazione semplice ed intuitiva per scoprire la fontanella piu vicina a te nel comune di Milano">
+    <meta name="keywords" content="fontanella vicina, vedovelle, acqua potabile, Milano, riempire borraccia">
+    <meta name="author" content="Milo Maghini">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="./css/leaflet.css" />
+    <link rel="stylesheet" href="./css/MarkerCluster.css" />
+    <link rel="stylesheet" href="./css/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="./css/app.css" />
+    <script src="./js/leaflet.js"></script>
+    <script src="./js/leaflet.markercluster.js"></script>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div class="popup-container">
+        <div class="popup">
+            <div class="popup-row">
+                <p class="address">Via dei matti 0, Milano, MI</p>
+            </div>
+            <div class="popup-row"> 
+                <button class="go-to-navigation">VAI</button>
+            </div>
+        </div>
+    </div>
+    <script src="./js/app.js"></script>
+</body>
+
+</html>
