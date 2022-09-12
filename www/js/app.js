@@ -1,6 +1,14 @@
+let addressDisplay = document.getElementsByClassName('address')[0];
+let selectedFountain;
 let map = createMap();
+
 populateMapWithFountains(map);
 
+function markerOnClick(event){
+    selectedFountain = this.data;
+    addressDisplay.innerHTML = selectedFountain.address;
+    map.setView(selectedFountain.latlng, 17)
+}
 
 function populateMapWithFountains(map) {
     fetch('./data/fountains-locations.json', { method: 'get' })
@@ -8,12 +16,16 @@ function populateMapWithFountains(map) {
         .then(fountainsLocations => {
             var markers = L.markerClusterGroup();
             fountainsLocations.forEach(fountainLocation => {
-                markers.addLayer(
-                    L.marker([
-                        fountainLocation.lat,
-                        fountainLocation.long
-                    ])
-                );
+                let latlng = [
+                    fountainLocation.lat,
+                    fountainLocation.long
+                ];
+                let marker = L.marker(latlng).on('click', markerOnClick);
+                marker.data = {
+                    address: fountainLocation.address,
+                    latlng
+                };
+                markers.addLayer(marker);
             });
             map.addLayer(markers);
         })

@@ -53,6 +53,8 @@ body {
 .address {
     margin: 0;
     font-weight: 300;
+    margin-inline-end: 0.5rem;
+    margin-inline-start: 0.5rem;
 }
 
 .go-to-navigation {
