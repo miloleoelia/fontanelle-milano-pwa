@@ -22,6 +22,14 @@ function markerOnClick(event) {
 }
 
 function populateMapWithFountains(map) {
+
+    let fountainIcon = L.icon({
+        iconUrl: './images/fountain-marker/marker-icon.png',
+        iconSize: [21, 50],
+        iconRetinaUrl: './images/fountain-marker/marker-icon-2x.png',
+        iconAnchor: [10, 50]
+    });
+
     fetch('./data/fountains-locations.json', { method: 'get' })
         .then(response => response.json())
         .then(fountainsLocations => {
@@ -31,7 +39,8 @@ function populateMapWithFountains(map) {
                     fountainLocation.lat,
                     fountainLocation.long
                 ];
-                let marker = L.marker(latlng).on('click', markerOnClick);
+                let marker = L.marker(latlng, { icon: fountainIcon })
+                    .on('click', markerOnClick);
                 marker.data = {
                     address: fountainLocation.address,
                     latlng
