@@ -3,6 +3,7 @@ let goToNavigationButton = document.getElementsByClassName('go-to-navigation')[0
 let selectedFountain;
 let currentLocationMarker;
 let currentLocationAccuracy;
+let followPosition = true;
 let fountainIcon = L.icon({
     iconUrl: './images/fountain-marker/marker-icon.png',
     iconSize: [21, 50],
@@ -20,8 +21,7 @@ let map = createMap();
 populateMapWithFountains();
 map.on('locationfound', displayCurrentPosition);
 map.locate({
-    setView: true, 
-    maxZoom: 17,
+    setView: false, 
     watch: true,
     enableHighAccuracy: true
 });
@@ -34,11 +34,14 @@ function displayCurrentPosition(e) {
         currentLocationAccuracy.setRadius(e.accuracy);
     }else{
         currentLocationMarker = L.marker(e.latlng, { icon: locationIcon });
-        currentLocationAccuracy = L.circle(e.latlng, e.accuracy);
+        currentLocationAccuracy = L.circle(e.latlng, {radius: e.accuracy});
         currentLocationMarker.addTo(map);
         currentLocationAccuracy.addTo(map);
     }
 
+    if(followPosition){
+        map.setView(e.latlng, 17);
+    }
 }
 
 goToNavigationButton.addEventListener('click', (el, ev) => {
@@ -53,6 +56,7 @@ goToNavigationButton.addEventListener('click', (el, ev) => {
 function fountainOnClick(event) {
     selectedFountain = this.data;
     addressDisplay.innerHTML = selectedFountain.address;
+    followPosition = false;
     map.setView(selectedFountain.latlng, 17);
 }
 
