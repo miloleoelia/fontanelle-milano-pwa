@@ -88,10 +88,15 @@ function populateMapWithFountains() {
 
 function createMap() {
     let map = L.map('map', {
-        attributionControl: false
+        attributionControl: false,
+        maxZoom: 18,
+        maxBounds: [
+            [45.36, 9],
+            [45.57, 9.32]
+        ]
     }).setView([45.4642, 9.1900], 13);
 
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('./map/tiles/{z}/{x}/{y}.png', {
         maxZoom: 19,
         preferCanvas: true
     }).addTo(map);
