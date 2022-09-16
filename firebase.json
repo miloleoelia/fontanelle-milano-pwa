@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "mappafontanellemilano",
+    "public": "www",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
