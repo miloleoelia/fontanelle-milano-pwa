@@ -1,6 +1,6 @@
 let addressDisplay = document.getElementsByClassName('address')[0];
 let goToNavigationButton = document.getElementsByClassName('go-to-navigation')[0];
-let selectedFountain;
+let selectedFountainMarker;
 let currentLocationMarker;
 let currentLocationAccuracy;
 let followPosition = true;
@@ -9,6 +9,12 @@ let fountainIcon = L.icon({
     iconSize: [21, 50],
     iconRetinaUrl: './images/fountain-marker/marker-icon-2x.png',
     iconAnchor: [10, 50]
+});
+let selectedFountainIcon = L.icon({
+    iconUrl: './images/fountain-marker-selected/marker-icon.png',
+    iconSize: [40, 70],
+    iconRetinaUrl: './images/fountain-marker-selected/marker-icon-2x.png',
+    iconAnchor: [20, 70]
 });
 let locationIcon = L.icon({
     iconUrl: './images/location-marker/marker-icon.png',
@@ -27,7 +33,6 @@ map.locate({
 });
 
 function displayCurrentPosition(e) {
-    console.log(e);
     if(currentLocationMarker && currentLocationAccuracy){
         currentLocationMarker.setLatLng(e.latlng);
         currentLocationAccuracy.setLatLng(e.latlng);
@@ -54,10 +59,14 @@ goToNavigationButton.addEventListener('click', (el, ev) => {
 });
 
 function fountainOnClick(event) {
-    selectedFountain = this.data;
-    addressDisplay.innerHTML = selectedFountain.address;
+    if(selectedFountainMarker){
+        selectedFountainMarker.setIcon(fountainIcon);
+    }
+    this.setIcon(selectedFountainIcon);
+    selectedFountainMarker = this;
+    addressDisplay.innerHTML = this.data.address;
     followPosition = false;
-    map.setView(selectedFountain.latlng, 17);
+    map.setView(this.data.latlng, 17);
 }
 
 function populateMapWithFountains() {
@@ -90,6 +99,7 @@ function createMap() {
     let map = L.map('map', {
         attributionControl: false,
         maxZoom: 18,
+        minZoom: 12,
         maxBounds: [
             [45.36, 9],
             [45.57, 9.32]
