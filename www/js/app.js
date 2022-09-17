@@ -53,7 +53,7 @@ goToNavigationButton.addEventListener('click', (el, ev) => {
     if (selectedFountainMarker) {
         window.location.href = 'https://www.google.com/maps/dir/?' + new URLSearchParams({
             api: 1,
-            destination: selectedFountainMarker.data.latlng[0] + ',' + selectedFountainMarker.data.selectedFountain.latlng[1]
+            destination: selectedFountainMarker.data.latlng[0] + ',' + selectedFountainMarker.data.latlng[1]
         });
     }
 });
