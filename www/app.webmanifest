@@ -1,0 +1,33 @@
+{
+    "lang": "it",
+    "name": "Fontanelle Milano",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#04c370",
+    "background_color": "#04c370",
+    "icons": [
+        {
+            "src": "images/pwa-icons/icon_x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "images/pwa-icons/icon.png",
+            "type": "image/png",
+            "sizes": "1024x1024"
+        },
+        {
+            "src": "images/pwa-icons/maskable_icon_x512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "maskable"
+        },
+        {
+            "src": "images/pwa-icons/maskable_icon.png",
+            "type": "image/png",
+            "sizes": "1024x1024",
+            "purpose": "maskable"
+        }
+    ]
+}
