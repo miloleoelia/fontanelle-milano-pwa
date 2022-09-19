@@ -22,6 +22,10 @@ let locationIcon = L.icon({
     iconRetinaUrl: './images/location-marker/marker-icon-2x.png',
     iconAnchor: [10, 10]
 });
+let areaMilano = [
+    [45.36, 9],
+    [45.57, 9.32]
+];
 let map = createMap();
 
 populateMapWithFountains();
@@ -32,7 +36,17 @@ map.locate({
     enableHighAccuracy: true
 });
 
+function isInsideBox(pos, box){
+    return pos[0] > box[0][0] && pos[0] < box[1][0] && pos[1] > box[0][1] && pos[1] < box[1][1];
+}
+
 function displayCurrentPosition(e) {
+    if(!isInsideBox([e.latlng.lat, e.latlng.lng], areaMilano)){
+        followPosition = false;
+        alert('Questa applicazione contiene solo le fontanelle all\'interno dell\'area di Milano. Al momento la tua posizione è stata rilevata al di fuori di quest\'area, quindi non verrà mostrata.');
+        map.stopLocate();
+    }
+
     if(currentLocationMarker && currentLocationAccuracy){
         currentLocationMarker.setLatLng(e.latlng);
         currentLocationAccuracy.setLatLng(e.latlng);
@@ -100,10 +114,7 @@ function createMap() {
         attributionControl: false,
         maxZoom: 18,
         minZoom: 12,
-        maxBounds: [
-            [45.36, 9],
-            [45.57, 9.32]
-        ]
+        maxBounds: areaMilano
     }).setView([45.4642, 9.1900], 13);
 
     L.tileLayer('./map/tiles/{z}/{x}/{y}.png', {
