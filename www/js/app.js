@@ -112,7 +112,7 @@ function createMap() {
     }).addTo(map);
 
     L.control.attribution({ position: 'topright' })
-        .addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors')
+        .addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright" target="blank">OpenStreetMap</a> contributors | <a href="https://github.com/miloleoelia/fontanelle-milano-pwa" target="blank">App credits</a>')
         .addTo(map);
 
     return map;
