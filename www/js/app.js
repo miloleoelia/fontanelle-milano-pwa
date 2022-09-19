@@ -3,7 +3,6 @@ let goToNavigationButton = document.getElementsByClassName('go-to-navigation')[0
 let selectedFountainMarker;
 let currentLocationMarker;
 let currentLocationAccuracy;
-let followPosition = true;
 let fountainIcon = L.icon({
     iconUrl: './images/fountain-marker/marker-icon.png',
     iconSize: [21, 50],
@@ -27,39 +26,56 @@ let areaMilano = [
     [45.57, 9.32]
 ];
 let map = createMap();
+let markersLayer;
 
-populateMapWithFountains();
-map.on('locationfound', displayCurrentPosition);
-map.locate({
-    setView: false, 
-    watch: true,
-    enableHighAccuracy: true
-});
+populateMapWithFountains()
+    .then(markers => {
+        map.on('locationfound', displayCurrentPosition);
+        map.locate({
+            setView: false,
+            watch: true,
+            enableHighAccuracy: true
+        });
+        markersLayer = markers;
+    });
 
-function isInsideBox(pos, box){
+
+function isInsideBox(pos, box) {
     return pos[0] > box[0][0] && pos[0] < box[1][0] && pos[1] > box[0][1] && pos[1] < box[1][1];
 }
 
+function findClosestFountains(pos, markers){
+    let distances = [];
+    markers.forEach(marker => {
+        let distance = pos.distanceTo(marker.getLatLng());
+        distances.push({
+            marker,
+            distance
+        });
+    });
+    distances.sort((a, b) => {
+        return a.distance < b.distance ? -1 : 1;
+    });
+    return distances[0].marker;
+}
+
 function displayCurrentPosition(e) {
-    if(!isInsideBox([e.latlng.lat, e.latlng.lng], areaMilano)){
-        followPosition = false;
+    if (!isInsideBox([e.latlng.lat, e.latlng.lng], areaMilano)) {
         alert('Questa applicazione contiene solo le fontanelle all\'interno dell\'area di Milano. Al momento la tua posizione è stata rilevata al di fuori di quest\'area, quindi non verrà mostrata.');
         map.stopLocate();
     }
 
-    if(currentLocationMarker && currentLocationAccuracy){
+    if (currentLocationMarker && currentLocationAccuracy) {
         currentLocationMarker.setLatLng(e.latlng);
         currentLocationAccuracy.setLatLng(e.latlng);
         currentLocationAccuracy.setRadius(e.accuracy);
-    }else{
+    } else {
         currentLocationMarker = L.marker(e.latlng, { icon: locationIcon });
-        currentLocationAccuracy = L.circle(e.latlng, {radius: e.accuracy});
+        currentLocationAccuracy = L.circle(e.latlng, { radius: e.accuracy });
         currentLocationMarker.addTo(map);
         currentLocationAccuracy.addTo(map);
-    }
-
-    if(followPosition){
-        map.setView(e.latlng, 17);
+        let closestFountain = findClosestFountains(e.latlng, markersLayer.getLayers());
+        fountainOnClick.call(closestFountain, {});
     }
 }
 
@@ -73,18 +89,17 @@ goToNavigationButton.addEventListener('click', (el, ev) => {
 });
 
 function fountainOnClick(event) {
-    if(selectedFountainMarker){
+    if (selectedFountainMarker) {
         selectedFountainMarker.setIcon(fountainIcon);
     }
     this.setIcon(selectedFountainIcon);
     selectedFountainMarker = this;
     addressDisplay.innerHTML = this.data.address;
-    followPosition = false;
     map.setView(this.data.latlng, 17);
 }
 
 function populateMapWithFountains() {
-    fetch('./data/fountains-locations.json', { method: 'get' })
+    return fetch('./data/fountains-locations.json', { method: 'get' })
         .then(response => response.json())
         .then(fountainsLocations => {
             var markers = L.markerClusterGroup();
@@ -102,6 +117,7 @@ function populateMapWithFountains() {
                 markers.addLayer(marker);
             });
             map.addLayer(markers);
+            return markers;
         })
         .catch(err => {
             window.alert('Errore nello scaricare i file necessari al funzionamento dell\'applicazione, riprovare piu tardi');
