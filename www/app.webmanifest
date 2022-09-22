@@ -1,11 +1,54 @@
 {
+    "$schema": "https://json.schemastore.org/web-manifest-combined.json",
     "lang": "it",
     "name": "Fontanelle Milano",
+    "short_name": "Fontami",
     "start_url": "/",
+    "categories": ["navigation", "fitness", "utilities"],
+    "prefer_related_applications": false,
+    "related_applications": [],
+    "display_override": [],
     "display": "standalone",
     "orientation": "portrait",
     "theme_color": "#04c370",
     "background_color": "#04c370",
+    "screenshots": [
+        {
+            "src": "images/pwa-screenshot/wide-1.jpg",
+            "sizes": "1439x761",
+            "type": "image/jpeg",
+            "platform": "wide",
+            "label": "Mappa delle fontanelle"
+        },
+        {
+            "src": "images/pwa-screenshot/wide-2.jpg",
+            "sizes": "1439x763",
+            "type": "image/jpeg",
+            "platform": "wide",
+            "label": "Mappa delle fontanelle con localizzazione"
+        },
+        {
+            "src": "images/pwa-screenshot/narrow-1.jpg",
+            "sizes": "1440x2960",
+            "type": "image/jpeg",
+            "platform": "narrow",
+            "label": "Mappa delle fontanelle con localizzazione"
+        },
+        {
+            "src": "images/pwa-screenshot/narrow-2.jpg",
+            "sizes": "1600x3288",
+            "type": "image/jpeg",
+            "platform": "narrow",
+            "label": "Mappa delle fontanelle con fontanella selezionata"
+        },
+        {
+            "src": "images/pwa-screenshot/narrow-3.jpg",
+            "sizes": "1440x2960",
+            "type": "image/jpeg",
+            "platform": "narrow",
+            "label": "Mappa delle fontanelle"
+        }
+    ],
     "icons": [
         {
             "src": "images/pwa-icons/icon_x512.png",
@@ -29,5 +72,6 @@
             "sizes": "1024x1024",
             "purpose": "maskable"
         }
-    ]
+    ],
+    "protocol_handlers": []
 }
