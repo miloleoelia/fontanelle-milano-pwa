@@ -1,8 +1,26 @@
 import { readFileSync, writeFileSync } from 'fs';
+import isEqual from 'lodash/isEqual.js';
 import fetch from 'node-fetch';
+import { exit } from 'process';
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+let datasetDataRequest = await fetch('https://dati.comune.milano.it/api/3/action/package_show?id=ds502_fontanelle-nel-comune-di-milano');
+let datasetData = await datasetDataRequest.json();
+if(!datasetData.success){
+    throw Error('Errore durante il download dei dati');
+}
+let jsonDatasetResource = datasetData.result.resources.find(res => res.mimetype == 'application/json');
+let jsonData = await fetch(jsonDatasetResource.url).then(request => request.json());
+
 let originData = JSON.parse(readFileSync('./origin.json'));
+
+if(isEqual(jsonData, originData)){
+    console.log('Nessun aggiornamento necessario');
+    exit(0);
+}
+writeFileSync('./origin.json', JSON.stringify(jsonData), 'utf8');
+originData = jsonData;
+
 let processedData = [];
 for (const fountain of originData) {
     let params = new URLSearchParams({
@@ -24,13 +42,7 @@ for (const fountain of originData) {
     //Limit rate at max 1 per second as specified in https://operations.osmfoundation.org/policies/nominatim/
     await sleep(1000);
 }
-
-try {
-    writeFileSync('./processed.json', JSON.stringify(processedData), 'utf8');
-    console.log('Data successfully saved to disk');
-} catch (error) {
-    console.log('An error has occurred ', error);
-}
+writeFileSync('./processed.json', JSON.stringify(processedData), 'utf8');
 
 function formatAddress(address){
     let addressString = '';
