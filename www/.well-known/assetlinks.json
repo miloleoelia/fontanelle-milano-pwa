@@ -1,0 +1,6 @@
+[{
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target" : { "namespace": "android_app", "package_name": "it.mappafontanellemilano.twa",
+                     "sha256_cert_fingerprints": ["D4:14:25:23:9B:FC:8E:A9:C5:6A:E1:73:4D:53:60:B7:83:F2:7D:9A:40:37:3B:D5:A0:66:37:68:4A:37:E2:BE"] }
+      }
+]
