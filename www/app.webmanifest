@@ -28,23 +28,23 @@
             "label": "Mappa delle fontanelle con localizzazione"
         },
         {
-            "src": "images/pwa-screenshot/narrow-1.jpg",
+            "src": "images/pwa-screenshot/narrow-1.png",
             "sizes": "1440x2960",
-            "type": "image/jpeg",
+            "type": "image/png",
             "platform": "narrow",
             "label": "Mappa delle fontanelle con localizzazione"
         },
         {
-            "src": "images/pwa-screenshot/narrow-2.jpg",
+            "src": "images/pwa-screenshot/narrow-2.png",
             "sizes": "1600x3288",
-            "type": "image/jpeg",
+            "type": "image/png",
             "platform": "narrow",
             "label": "Mappa delle fontanelle con fontanella selezionata"
         },
         {
-            "src": "images/pwa-screenshot/narrow-3.jpg",
+            "src": "images/pwa-screenshot/narrow-3.png",
             "sizes": "1440x2960",
-            "type": "image/jpeg",
+            "type": "image/png",
             "platform": "narrow",
             "label": "Mappa delle fontanelle"
         }
