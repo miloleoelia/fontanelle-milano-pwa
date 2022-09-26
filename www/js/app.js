@@ -28,6 +28,7 @@ let areaMilano = [
 let map = createMap();
 let markersLayer;
 
+registerServiceWorker();
 populateMapWithFountains()
     .then(markers => {
         map.on('locationfound', displayCurrentPosition);
@@ -143,4 +144,25 @@ function createMap() {
         .addTo(map);
 
     return map;
+}
+
+async function registerServiceWorker(){
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register("serviceworker.js");
+        const registration = await navigator.serviceWorker.ready;
+        if ('periodicSync' in registration) {
+            const status = await navigator.permissions.query({
+                name: 'periodic-background-sync',
+            });
+            if (status.state === 'granted') {
+                try {
+                    await registration.periodicSync.register('appUpdate', {
+                        minInterval: 7 * 24 * 60 * 60 * 1000, // 1 week
+                    });
+                } catch (e) {
+                    console.error(`Periodic background sync failed:\n${e}`);
+                }
+            }
+        }
+    }
 }

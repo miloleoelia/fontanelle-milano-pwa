@@ -1,4 +1,5 @@
-const urlsToCache = [
+const appVersion = "1.0";
+const appUrlsToCache = [
    "./", "app.webmanifest",
    "js/app.js", "js/leaflet.js", "js/leaflet.markercluster.js",
    "css/app.css", "css/leaflet.css", "css/MarkerCluster.css", "css/MarkerCluster.Default.css",
@@ -8,21 +9,32 @@ const urlsToCache = [
    "fonts/Roboto-Light.ttf", "fonts/Roboto-Medium.ttf",
    "data/fountains-locations.json"
 ];
+
 self.addEventListener("install", (event) => {
-   event.waitUntil(
-      caches.open("pwa-assets")
-         .then(cache => {
-            return cache.addAll(urlsToCache).catch(e => {console.log(e)})
-         })
-   );
+   fetchAndCache(event, appUrlsToCache);
 });
+
 self.addEventListener("fetch", event => {
    event.respondWith(
       caches.match(event.request, {ignoreVary: true})
          .then(cachedResponse => {
-            // It can update the cache to serve updated content on the next request
             return cachedResponse || fetch(event.request);
-         }
-         )
+         })
    )
 });
+
+self.addEventListener('periodicsync', (event) => {
+   if (event.tag === 'appUpdate') {
+     event.waitUntil(fetchAndCache(event, ["data/fountains-locations.json"]));
+   }
+ });
+
+function fetchAndCache(event, urls) {
+   event.waitUntil(
+      caches.open("pwa-assets")
+         .then(cache => {
+            return cache.addAll(urls).catch(e => { console.log(e); });
+         })
+   );
+}
+
