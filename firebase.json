@@ -6,6 +6,44 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "headers": [
+      {
+        "source": "map/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=5184000, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "css/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=604800, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "js/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=604800, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "fonts/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=604800, must-revalidate"
+          }
+        ]
+      }
     ]
   }
 }

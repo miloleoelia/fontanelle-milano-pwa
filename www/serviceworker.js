@@ -1,4 +1,4 @@
-const appVersion = "1.0";
+const appVersion = "2.0";
 const appUrlsToCache = [
    "./", "app.webmanifest",
    "js/app.js", "js/leaflet.js", "js/leaflet.markercluster.js",

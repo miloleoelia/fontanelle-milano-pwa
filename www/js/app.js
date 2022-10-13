@@ -134,7 +134,7 @@ function createMap() {
         maxBounds: areaMilano
     }).setView([45.4642, 9.1900], 13);
 
-    L.tileLayer('./map/tiles/{z}/{x}/{y}.png', {
+    L.tileLayer('./map/tiles/{z}/{x}/{y}.webp', {
         maxZoom: 19,
         preferCanvas: true
     }).addTo(map);
