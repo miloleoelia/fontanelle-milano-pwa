@@ -3,43 +3,50 @@ let goToNavigationButton = document.getElementsByClassName('go-to-navigation')[0
 let selectedFountainMarker;
 let currentLocationMarker;
 let currentLocationAccuracy;
-let fountainIcon = L.icon({
-    iconUrl: './images/fountain-marker/marker-icon.png',
-    iconSize: [21, 50],
-    iconRetinaUrl: './images/fountain-marker/marker-icon-2x.png',
-    iconAnchor: [10, 50]
-});
-let selectedFountainIcon = L.icon({
-    iconUrl: './images/fountain-marker-selected/marker-icon.png',
-    iconSize: [40, 70],
-    iconRetinaUrl: './images/fountain-marker-selected/marker-icon-2x.png',
-    iconAnchor: [20, 70]
-});
-let locationIcon = L.icon({
-    iconUrl: './images/location-marker/marker-icon.png',
-    iconSize: [20, 20],
-    iconRetinaUrl: './images/location-marker/marker-icon-2x.png',
-    iconAnchor: [10, 10]
-});
+let fountainIcon;
+let selectedFountainIcon;
+let locationIcon;
 let areaMilano = [
     [45.36, 9],
     [45.57, 9.32]
 ];
-let map = createMap();
+let map;
 let markersLayer;
 
-registerServiceWorker();
-populateMapWithFountains()
-    .then(markers => {
-        map.on('locationfound', displayCurrentPosition);
-        map.locate({
-            setView: false,
-            watch: true,
-            enableHighAccuracy: true
-        });
-        markersLayer = markers;
-    });
+window.addEventListener('load', start);
 
+function start() {
+    fountainIcon = L.icon({
+        iconUrl: './images/fountain-marker/marker-icon.png',
+        iconSize: [21, 50],
+        iconRetinaUrl: './images/fountain-marker/marker-icon-2x.png',
+        iconAnchor: [10, 50]
+    });
+    selectedFountainIcon = L.icon({
+        iconUrl: './images/fountain-marker-selected/marker-icon.png',
+        iconSize: [40, 70],
+        iconRetinaUrl: './images/fountain-marker-selected/marker-icon-2x.png',
+        iconAnchor: [20, 70]
+    });
+    locationIcon = L.icon({
+        iconUrl: './images/location-marker/marker-icon.png',
+        iconSize: [20, 20],
+        iconRetinaUrl: './images/location-marker/marker-icon-2x.png',
+        iconAnchor: [10, 10]
+    });
+    map = createMap();
+    registerServiceWorker();
+    populateMapWithFountains()
+        .then(markers => {
+            map.on('locationfound', displayCurrentPosition);
+            map.locate({
+                setView: false,
+                watch: true,
+                enableHighAccuracy: true
+            });
+            markersLayer = markers;
+        });
+}
 
 function isInsideBox(pos, box) {
     return pos[0] > box[0][0] && pos[0] < box[1][0] && pos[1] > box[0][1] && pos[1] < box[1][1];
